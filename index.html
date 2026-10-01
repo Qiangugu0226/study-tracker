@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学习打卡追踪器 —— 记录每天的学习内容与时长">
+  <title>学习打卡追踪器</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ 页头 ============ -->
+  <header class="page-header">
+    <div class="container">
+      <h1>学习打卡</h1>
+      <p class="subtitle">记录每天学了什么、学了多久。</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ 统计区 ============ -->
+    <section class="stats" aria-label="打卡统计">
+      <div class="stat-card">
+        <span class="stat-value" id="stat-total">0</span>
+        <span class="stat-label">总打卡</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-streak">0</span>
+        <span class="stat-label">连续天数</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-minutes">0</span>
+        <span class="stat-label">总时长（分钟）</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="stat-today">未打卡</span>
+        <span class="stat-label">今日状态</span>
+      </div>
+    </section>
+
+    <!-- ============ 添加表单 ============ -->
+    <section class="panel">
+      <h2 class="panel-title">添加一条记录</h2>
+
+      <form id="record-form" class="record-form">
+        <div class="field">
+          <label for="input-date">日期</label>
+          <input type="date" id="input-date" required>
+        </div>
+
+        <div class="field field-grow">
+          <label for="input-content">学习了什么</label>
+          <input type="text" id="input-content" placeholder="例如：CSS Flex 布局" required>
+        </div>
+
+        <div class="field">
+          <label for="input-duration">时长（分钟）</label>
+          <input type="number" id="input-duration" min="1" max="1440" placeholder="45" required>
+        </div>
+
+        <button type="submit" class="btn-primary">添加</button>
+      </form>
+
+      <p class="form-error" id="form-error" hidden></p>
+    </section>
+
+    <!-- ============ 记录列表 ============ -->
+    <section class="panel">
+      <h2 class="panel-title">
+        打卡记录
+        <span class="count" id="record-count">0 条</span>
+      </h2>
+
+      <ul class="record-list" id="record-list"></ul>
+      <p class="empty-hint" id="empty-hint">还没有记录，从上面添加第一条吧。</p>
+    </section>
+
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="page-footer">
+    <div class="container">
+      <p>学习打卡追踪器 · 纯 HTML / CSS / JavaScript 手写</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
