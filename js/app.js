@@ -37,6 +37,15 @@ function today() {
   return toDateString(new Date());
 }
 
+// 把 "2026-10-01" 转成 "10月1日 周三"，给界面显示用
+const WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+function formatDateCN(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return dateStr;
+  return `${d.getMonth() + 1}月${d.getDate()}日 ${WEEKDAYS[d.getDay()]}`;
+}
+
 // 防止用户输入的内容被当成 HTML 执行
 function escapeHtml(str) {
   return String(str)
@@ -79,21 +88,38 @@ function calcStreak(records) {
   return streak;
 }
 
+// 有记录的不同日期数量
+function calcDays(records) {
+  return new Set(records.map(function (r) { return r.date; })).size;
+}
+
+function sumMinutes(records) {
+  return records.reduce(function (sum, r) {
+    return sum + Number(r.duration || 0);
+  }, 0);
+}
+
 /* ---------- 4. 抓取页面元素 ---------- */
 
 const listEl        = document.getElementById('record-list');
 const emptyHintEl   = document.getElementById('empty-hint');
 const countEl       = document.getElementById('record-count');
+const pillEl        = document.getElementById('today-pill');
+const appMetaEl     = document.getElementById('app-meta');
+const heroNoteEl    = document.getElementById('hero-note');
+const statTodayEl   = document.getElementById('stat-today-minutes');
 const statTotalEl   = document.getElementById('stat-total');
 const statStreakEl  = document.getElementById('stat-streak');
 const statMinutesEl = document.getElementById('stat-minutes');
-const statTodayEl   = document.getElementById('stat-today');
+const statDaysEl    = document.getElementById('stat-days');
 
-const formEl         = document.getElementById('record-form');
-const dateInput      = document.getElementById('input-date');
-const contentInput   = document.getElementById('input-content');
-const durationInput  = document.getElementById('input-duration');
-const errorEl        = document.getElementById('form-error');
+const formEl        = document.getElementById('record-form');
+const formSectionEl = document.getElementById('form-section');
+const jumpBtn       = document.getElementById('jump-to-form');
+const dateInput     = document.getElementById('input-date');
+const contentInput  = document.getElementById('input-content');
+const durationInput = document.getElementById('input-duration');
+const errorEl       = document.getElementById('form-error');
 
 /* ---------- 5. 渲染 ---------- */
 
@@ -108,28 +134,43 @@ function render(records) {
     return `
       <li class="record-item" data-id="${r.id}">
         <div class="record-main">
-          <span class="record-date">${escapeHtml(r.date)}</span>
           <span class="record-content">${escapeHtml(r.content)}</span>
+          <span class="record-date">${escapeHtml(formatDateCN(r.date))}</span>
         </div>
-        <div class="record-side">
-          <span class="record-duration">${Number(r.duration)} 分钟</span>
-          <button type="button" class="btn-delete" data-action="delete"
-                  aria-label="删除这条记录">删除</button>
-        </div>
+        <span class="record-duration">${Number(r.duration)}<i>分</i></span>
+        <button type="button" class="btn-delete" data-action="delete"
+                aria-label="删除这条记录" title="删除">×</button>
       </li>`;
   }).join('');
 
   emptyHintEl.hidden = sorted.length > 0;
   countEl.textContent = sorted.length + ' 条';
 
-  statTotalEl.textContent   = sorted.length;
-  statStreakEl.textContent  = calcStreak(records);
-  statMinutesEl.textContent = records.reduce(function (sum, r) {
-    return sum + Number(r.duration || 0);
-  }, 0);
-  statTodayEl.textContent   = records.some(function (r) {
-    return r.date === today();
-  }) ? '已打卡' : '未打卡';
+  /* --- 算出所有要显示的数字 --- */
+  const streak       = calcStreak(records);
+  const totalMinutes = sumMinutes(records);
+  const days         = calcDays(records);
+
+  const todayRecords = records.filter(function (r) { return r.date === today(); });
+  const todayMinutes = sumMinutes(todayRecords);
+
+  /* --- 顶部 --- */
+  pillEl.textContent = streak > 0 ? '连续 ' + streak + ' 天' : '从今天开始';
+  appMetaEl.textContent = formatDateCN(today())
+    + ' · 已连续 ' + streak + ' 天'
+    + ' · 累计 ' + totalMinutes + ' 分钟';
+
+  /* --- 今日卡片 --- */
+  statTodayEl.textContent = todayMinutes;
+  heroNoteEl.textContent = todayRecords.length > 0
+    ? '今天记录了 ' + todayRecords.length + ' 条 · 共 ' + todayMinutes + ' 分钟'
+    : '今天还没有记录 · 目标 60 分钟';
+
+  /* --- 统计卡 --- */
+  statTotalEl.textContent   = records.length;
+  statStreakEl.textContent  = streak;
+  statMinutesEl.textContent = totalMinutes;
+  statDaysEl.textContent    = days;
 }
 
 /* ---------- 6. 事件 ---------- */
@@ -181,6 +222,12 @@ listEl.addEventListener('click', function (event) {
   records = records.filter(function (r) { return r.id !== id; });
   saveRecords(records);
   render(records);
+});
+
+// 「记一笔 →」滚到表单并聚焦
+jumpBtn.addEventListener('click', function () {
+  formSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  contentInput.focus({ preventScroll: true });
 });
 
 function showError(msg) {

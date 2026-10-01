@@ -1,20 +1,39 @@
 /* =========================================================
    学习打卡追踪器 —— 样式
-   变量集中在 :root 里，想换配色只改这一段就行。
+   视觉参考：天象收集者（浅蓝渐变 / 半透明卡片 / 超大细体数字）
+   所有颜色和圆角都收在 :root 里，想换配色只改这一段。
    ========================================================= */
 
 /* ---------- 1. 设计变量 ---------- */
 :root {
-  --color-bg: #f5f7fb;
-  --color-surface: #ffffff;
-  --color-border: #e3e8f0;
-  --color-text: #1f2937;
-  --color-muted: #6b7280;
-  --color-primary: #3b6ef6;
-  --color-primary-dark: #2c57cf;
-  --color-danger: #e5484d;
-  --radius: 12px;
-  --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 8px 24px rgba(16, 24, 40, .06);
+  /* 颜色 */
+  --accent:        #4f97dd;   /* 主色：天蓝 */
+  --accent-deep:   #2f7ac4;
+  --accent-soft:   #77b6ea;
+  --ink:           #1b2a3a;   /* 主文字：深藏青 */
+  --ink-2:         #4a5f75;
+  --muted:         #93a5b8;   /* 次要文字 */
+  --line:          #e6eef7;
+  --danger:        #e5484d;
+
+  /* 玻璃卡片 */
+  --glass:         rgba(255, 255, 255, .72);
+  --glass-border:  rgba(255, 255, 255, .9);
+
+  /* 圆角 */
+  --r-lg: 20px;
+  --r-md: 14px;
+  --r-sm: 10px;
+
+  /* 阴影 */
+  --shadow-card: 0 2px 10px rgba(80, 120, 170, .07);
+  --shadow-hero: 0 12px 30px rgba(74, 144, 217, .28);
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC",
+                "SimSun", Georgia, serif;
 }
 
 /* ---------- 2. 基础 ---------- */
@@ -24,146 +43,314 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-               "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
+  min-height: 100vh;
+  padding: 28px 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  font-family: var(--font-sans);
+  color: var(--ink);
   line-height: 1.6;
+
+  /* 页面底：浅蓝 → 暖米白 */
+  background: linear-gradient(170deg, #d8e8fa 0%, #e9f2fc 35%, #f6f2ea 100%);
+  background-attachment: fixed;
 }
 
-.container {
-  width: min(880px, 100% - 2rem);
-  margin-inline: auto;
+/* 内容区：模仿参考图里的手机屏 */
+.app {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 20px 28px;
+
+  background: linear-gradient(180deg, #eaf4fe 0%, #f6f4ef 60%, #fdf8f0 100%);
+  border-radius: 26px;
+  box-shadow: 0 24px 60px rgba(60, 100, 150, .16),
+              0 2px 8px rgba(60, 100, 150, .06);
 }
 
-/* ---------- 3. 页头 ---------- */
-.page-header {
-  background: linear-gradient(135deg, #3b6ef6, #6b4df6);
-  color: #ffffff;
-  padding: 2.5rem 0 2rem;
+/* ---------- 3. 顶部 ---------- */
+.app-header {
+  margin-bottom: 2px;
 }
 
-.page-header h1 {
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.app-title {
   margin: 0;
-  font-size: 2rem;
-  letter-spacing: .02em;
-}
-
-.page-header .subtitle {
-  margin: .4rem 0 0;
-  opacity: .88;
-  font-size: .95rem;
-}
-
-/* ---------- 4. 统计卡片 ---------- */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: .75rem;
-  margin: 1.5rem 0;
-}
-
-.stat-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: .9rem .5rem;
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-.stat-value {
-  display: block;
-  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 23px;
   font-weight: 700;
-  line-height: 1.3;
-  color: var(--color-primary);
+  letter-spacing: 4px;
+  color: var(--ink);
 }
 
-.stat-label {
-  font-size: .78rem;
-  color: var(--color-muted);
+/* 胶囊标签（参考图里的「北京」） */
+.pill {
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border: 1px solid rgba(79, 151, 221, .2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .75);
+  color: var(--accent-deep);
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-/* ---------- 5. 面板 ---------- */
-.panel {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow);
+.app-meta {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
-.panel-title {
-  display: flex;
-  align-items: baseline;
-  gap: .5rem;
-  margin: 0 0 1rem;
-  font-size: 1.05rem;
+/* ---------- 4. 今日卡片 ---------- */
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  margin-top: 16px;
+  padding: 16px 20px 18px;
+
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, #74b6ec 0%, #4f97dd 55%, #3f83cc 100%);
+  box-shadow: var(--shadow-hero);
+  color: #ffffff;
 }
 
-.count {
-  font-size: .8rem;
+/* 右上角那团柔光 */
+.hero-card::after {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -40px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .16);
+  pointer-events: none;
+}
+
+/* 让文字压在柔光上面 */
+.hero-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-label {
+  margin: 0;
+  font-size: 12px;
+  opacity: .85;
+}
+
+.hero-subject {
+  margin: 2px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* 超大细体数字 —— 整个设计的视觉重心 */
+.hero-number {
+  margin: 6px 0 0;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-unit {
+  margin-left: 6px;
+  font-size: 14px;
   font-weight: 400;
-  color: var(--color-muted);
+  opacity: .85;
+  letter-spacing: 0;
 }
 
-/* ---------- 6. 表单 ---------- */
-.record-form {
+.hero-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  opacity: .82;
+}
+
+.hero-btn {
+  display: block;
+  margin: 14px 0 0 auto;
+  padding: 7px 16px;
+
+  border: 1px solid rgba(255, 255, 255, .4);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, .22);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .18s;
+}
+
+.hero-btn:hover {
+  background: rgba(255, 255, 255, .32);
+}
+
+/* ---------- 5. 区块标题（左侧蓝色小竖条 ▎） ---------- */
+.section {
+  margin-top: 22px;
+}
+
+.section-title {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: .75rem;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
 }
 
-.field {
+.section-title::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.section-extra {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* ---------- 6. 玻璃卡片 ---------- */
+.card {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  background: var(--glass);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ---------- 7. 统计卡（参考图的「我的收集」） ---------- */
+.stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+}
+
+.stat-main {
+  min-width: 0;
+}
+
+.stat-number {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-unit {
+  margin-left: 3px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.stat-caption {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stat-grid {
+  display: flex;
+  gap: 18px;
+}
+
+.stat-cell {
+  text-align: center;
+}
+
+.stat-cell b {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-cell span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------- 8. 表单 ---------- */
+.form-card {
   display: flex;
   flex-direction: column;
-  gap: .3rem;
-}
-
-.field-grow {
-  flex: 1 1 200px;
+  gap: 13px;
+  padding: 16px 18px;
 }
 
 .field label {
-  font-size: .82rem;
-  color: var(--color-muted);
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .field input {
-  padding: .55rem .7rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: #ffffff;
-  color: var(--color-text);
-  font-size: .95rem;
+  width: 100%;
+  padding: 11px 13px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .85);
+  color: var(--ink);
   font-family: inherit;
-  transition: border-color .15s, box-shadow .15s;
+  font-size: 14px;
+  transition: border-color .18s, box-shadow .18s;
+}
+
+.field input::placeholder {
+  color: #b9c6d4;
 }
 
 .field input:focus {
   outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(59, 110, 246, .15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 151, 221, .14);
 }
 
 .btn-primary {
-  padding: .6rem 1.4rem;
+  width: 100%;
+  margin-top: 2px;
+  padding: 12px;
+
   border: none;
-  border-radius: 8px;
-  background: var(--color-primary);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #5a9fe0, #3f83cc);
   color: #ffffff;
-  font-size: .95rem;
   font-family: inherit;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background .15s, transform .1s;
+  box-shadow: 0 6px 16px rgba(63, 131, 204, .28);
+  transition: box-shadow .18s, transform .12s;
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-dark);
+  box-shadow: 0 8px 20px rgba(63, 131, 204, .36);
 }
 
 .btn-primary:active {
@@ -171,123 +358,123 @@ body {
 }
 
 .form-error {
-  margin: .75rem 0 0;
-  color: var(--color-danger);
-  font-size: .85rem;
+  margin: 0;
+  color: var(--danger);
+  font-size: 12px;
 }
 
-/* ---------- 7. 记录列表 ---------- */
+/* ---------- 9. 记录列表（参考图的「其他天象」列表） ---------- */
 .record-list {
-  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .record-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: .8rem .25rem;
-  border-bottom: 1px solid var(--color-border);
-}
+  gap: 12px;
+  padding: 12px 14px;
 
-.record-item:last-child {
-  border-bottom: none;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  background: var(--glass);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .record-main {
-  display: flex;
-  flex-direction: column;
-  gap: .15rem;
+  flex: 1;
   min-width: 0;
 }
 
-.record-date {
-  font-size: .78rem;
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-}
-
 .record-content {
-  font-size: .95rem;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
   word-break: break-word;
 }
 
-.record-side {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  flex-shrink: 0;
+.record-date {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 }
 
+/* 右侧的蓝色数字（参考图里的 38% / 22%） */
 .record-duration {
-  font-size: .85rem;
+  flex-shrink: 0;
+  color: var(--accent);
+  font-size: 18px;
   font-weight: 600;
-  color: var(--color-primary);
-  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.record-duration i {
+  margin-left: 2px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
 }
 
 .btn-delete {
-  padding: .25rem .6rem;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+
+  border: none;
+  border-radius: 8px;
   background: transparent;
-  color: var(--color-muted);
-  font-size: .8rem;
-  font-family: inherit;
+  color: #c2cfdd;
+  font-size: 17px;
+  line-height: 1;
   cursor: pointer;
-  transition: border-color .15s, color .15s, background .15s;
+  transition: color .15s, background .15s;
 }
 
 .btn-delete:hover {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
-  background: rgba(229, 72, 77, .06);
+  color: var(--danger);
+  background: rgba(229, 72, 77, .08);
 }
 
 .empty-hint {
-  margin: .5rem 0;
-  color: var(--color-muted);
-  font-size: .9rem;
+  margin: 0;
+  padding: 22px 0;
+  color: var(--muted);
+  font-size: 13px;
   text-align: center;
 }
 
-/* ---------- 8. 页脚 ---------- */
-.page-footer {
-  padding: 1.5rem 0 2.5rem;
+/* ---------- 10. 页脚 ---------- */
+.app-footer {
+  margin-top: 26px;
   text-align: center;
-  color: var(--color-muted);
-  font-size: .85rem;
 }
 
-/* ---------- 9. 响应式 ---------- */
-@media (max-width: 640px) {
-  .page-header h1 {
-    font-size: 1.6rem;
+.app-footer p {
+  margin: 0;
+  color: #b0bfcd;
+  font-size: 11px;
+}
+
+/* ---------- 11. 小屏：去掉手机外框，铺满整屏 ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
   }
 
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .record-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .btn-primary {
-    width: 100%;
-  }
-
-  .record-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .4rem;
-  }
-
-  .record-side {
-    width: 100%;
-    justify-content: space-between;
+  .app {
+    max-width: none;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
