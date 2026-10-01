@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cheguu 的个人主页 —— 前端开发学习者">
+  <title>Cheguu | 前端开发学习者</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ 页头 ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="logo">Cheguu</a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#about">关于我</a>
+        <a href="#skills">技能</a>
+        <a href="#timeline">学习路线</a>
+        <a href="#contact">联系</a>
+      </nav>
+
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="切换深色模式" title="切换深色模式">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ 首屏 ============ -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-greeting">你好，我是</p>
+        <h1 class="hero-name">Cheguu</h1>
+        <p class="hero-tagline">
+          一名正在学习前端开发的初学者，正在把每天的进步变成代码。
+        </p>
+
+        <div class="hero-actions">
+          <!-- 【改成你的】把 href 换成你的 GitHub 主页 -->
+          <a class="btn btn-primary" href="https://github.com/Qiangugu0226" target="_blank" rel="noopener">
+            我的 GitHub
+          </a>
+          <a class="btn btn-ghost" href="#about">了解更多</a>
+        </div>
+
+        <p class="hero-status">
+          <span class="status-dot"></span>
+          正在寻找前端开发实习 / 初级岗位机会
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 关于我 ============ -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">关于我</h2>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <!-- 【改成你自己的话】这一段非常重要，面试官会看 -->
+            <p>
+              我是一名前端开发的学习者。从零开始学习 HTML、CSS 和 JavaScript，
+              目前正在系统地打基础，并坚持把每一次练习都提交到 GitHub 上。
+            </p>
+            <p>
+              我喜欢「把想法变成能点开的东西」这件事。比起看完一整套教程，
+              我更倾向于自己动手做一个小东西，在踩坑和排错中真正理解原理。
+            </p>
+            <p>
+              这个页面本身也是我的练习作品之一 —— 它包含响应式布局、
+              深色模式切换和本地存储，都是我一步步写出来的。
+            </p>
+          </div>
+
+          <aside class="about-card">
+            <h3>快速了解</h3>
+            <ul class="fact-list">
+              <li><span>方向</span><strong>前端开发</strong></li>
+              <li><span>状态</span><strong>学习中 · 求职中</strong></li>
+              <li><span>主力语言</span><strong>JavaScript</strong></li>
+              <li><span>开始学习</span><strong>2025 年</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 技能 ============ -->
+    <section id="skills" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">技能</h2>
+        <p class="section-subtitle">
+          这里只写我真正用过、能说出所以然的东西。诚实比堆砌更有说服力。
+        </p>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon">📄</div>
+            <h3>HTML5</h3>
+            <p>语义化标签、表单、无障碍基础属性（alt、aria-label）。</p>
+            <div class="skill-bar"><span style="width: 70%"></span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🎨</div>
+            <h3>CSS3</h3>
+            <p>Flexbox、Grid 布局、响应式媒体查询、CSS 变量与深色模式。</p>
+            <div class="skill-bar"><span style="width: 65%"></span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">⚡</div>
+            <h3>JavaScript</h3>
+            <p>DOM 操作、事件处理、localStorage、异步请求（学习中）。</p>
+            <div class="skill-bar"><span style="width: 45%"></span></div>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🔧</div>
+            <h3>工具</h3>
+            <p>Git / GitHub 版本管理、VS Code、浏览器开发者工具调试。</p>
+            <div class="skill-bar"><span style="width: 55%"></span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 学习路线 ============ -->
+    <section id="timeline" class="section">
+      <div class="container">
+        <h2 class="section-title">学习路线</h2>
+        <p class="section-subtitle">公开记录我的学习进度，也方便自己复盘。</p>
+
+        <ol class="timeline">
+          <li class="timeline-item is-done">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-badge">已完成</span>
+              <h3>环境搭建与 Git 入门</h3>
+              <p>装好 Git、Node.js、VS Code，跑通第一次提交与推送。</p>
+            </div>
+          </li>
+
+          <li class="timeline-item is-active">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-badge">进行中</span>
+              <h3>HTML + CSS 打基础</h3>
+              <p>掌握语义化结构和响应式布局，能独立还原常见页面设计稿。</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-badge">计划中</span>
+              <h3>JavaScript 核心</h3>
+              <p>DOM 操作、事件机制、数组方法、异步与 Fetch API。</p>
+            </div>
+          </li>
+
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-badge">计划中</span>
+              <h3>框架与全栈项目</h3>
+              <p>学习 React 或 Vue，做出一个前后端打通的完整作品。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 联系 ============ -->
+    <section id="contact" class="section section-alt">
+      <div class="container contact-block">
+        <h2 class="section-title">联系我</h2>
+        <p class="section-subtitle">
+          如果你有实习机会、项目建议，或者只是想交流学习，都欢迎联系我。
+        </p>
+
+        <div class="contact-links">
+          <!-- 【改成你的】邮箱 -->
+          <a class="contact-item" href="mailto:guguchen0226@gmail.com">
+            <span class="contact-icon">✉️</span>
+            <span>guguchen0226@gmail.com</span>
+          </a>
+
+          <!-- 【改成你的】GitHub 用户名 -->
+          <a class="contact-item" href="https://github.com/Qiangugu0226" target="_blank" rel="noopener">
+            <span class="contact-icon">💻</span>
+            <span>github.com/Qiangugu0226</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year">2025</span> Cheguu · 用 HTML 和 CSS 手写</p>
+      <p class="footer-hint">这个页面的源代码是公开的，欢迎查看。</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
